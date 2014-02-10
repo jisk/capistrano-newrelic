@@ -5,7 +5,7 @@ end
 namespace :load do
   task :defaults do
     set :newrelic_env, fetch(:stage, fetch(:rack_env, fetch(:rails_env, 'production')))
-    set :newrelic_revision, capture('git show-ref #{fetch(:branch)}').split.first
+    set :newrelic_revision, proc { 'git show-ref #{fetch(:branch)}').split.first }
   end
 end
 
