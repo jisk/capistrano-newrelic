@@ -5,6 +5,7 @@ end
 namespace :load do
   task :defaults do
     set :newrelic_env, fetch(:stage, fetch(:rack_env, fetch(:rails_env, 'production')))
+    set :newrelic_revision, capture('git show-ref #{fetch(:branch)}').split.first
   end
 end
 
@@ -16,7 +17,7 @@ namespace :newrelic do
 
       deploy_options = {
           :environment => fetch(:newrelic_env),
-          :revision => release_timestamp.strip,
+          :revision => fetch(:newrelic_revision),
           :changelog => fetch(:newrelic_changelog),
           :description => fetch(:newrelic_desc),
           :user => capture('git config user.name').strip,

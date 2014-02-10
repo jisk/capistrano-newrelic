@@ -26,6 +26,8 @@ Configurable options, shown here with defaults:
 
       # New Relic environment to deploy to. Sets config based on section of newrelic.yml
       set :newrelic_env, fetch(:stage, fetch(:rack_env, fetch(:rails_env, 'production')))
+      # Revision
+      set :newrelic_revision, capture('git show-ref #{fetch(:branch)}').split.first
       # Deployment changelog
       set :newrelic_changelog, ""
       # Deployment description
